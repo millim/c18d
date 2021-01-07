@@ -18,7 +18,7 @@ func Run(num string) error {
 	log.Println(fmt.Sprintf("下载中....总共%s页", page))
 	download(num, title, page)
 	log.Println("正在打包压缩")
-	Zip(title, fmt.Sprintf("%s.zip", title))
+	Zip(title, fmt.Sprintf("%s.zip", num))
 	log.Println("移除源文件")
 	os.RemoveAll(title)
 	log.Println("完成")
