@@ -1,7 +1,8 @@
-package lib
+package c18d
 
 import (
 	"fmt"
+	"github.com/millim/c18d/lib"
 	"os"
 	"strconv"
 	"sync"
@@ -25,7 +26,7 @@ func (book *Book) SetDownloadDirPath(path string) {
 }
 
 func (book *Book) GetTitleInfo() error {
-	err, title, page := getTitleAndPage(book.Number)
+	err, title, page := lib.GetTitleAndPage(book.Number)
 	if err != nil {
 		return err
 	}
@@ -38,7 +39,7 @@ func (book *Book) Zip() {
 	if book.DownloadDirPath == "" {
 		book.DownloadDirPath = book.Title
 	}
-	Zip(book.DownloadDirPath, fmt.Sprintf("%s.zip", book.DownloadDirPath))
+	lib.Zip(book.DownloadDirPath, fmt.Sprintf("%s.zip", book.DownloadDirPath))
 }
 
 func (book *Book) DeleteDir() {
@@ -64,13 +65,13 @@ func (book *Book) Download() {
 	}
 
 	var wg sync.WaitGroup
-	imageURL := addImageAddr(book.Number)
+	imageURL := lib.AddImageAddr(book.Number)
 	wg.Add(p)
 	for i := 1; i <= p; i++ {
 		pageName := fmt.Sprintf("%05d.jpg", i)
 		pageURLPath := fmt.Sprintf("%s/%s", imageURL, pageName)
 		go func() {
-			downloadFile(fmt.Sprintf("%s/%s", book.DownloadDirPath, pageName), pageURLPath)
+			lib.DownloadFile(fmt.Sprintf("%s/%s", book.DownloadDirPath, pageName), pageURLPath)
 			wg.Done()
 		}()
 	}

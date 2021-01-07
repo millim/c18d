@@ -1,4 +1,4 @@
-package lib
+package c18d
 
 import (
 	"fmt"

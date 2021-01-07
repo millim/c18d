@@ -13,7 +13,7 @@ func collyConfig() *colly.Collector {
 	)
 }
 
-func getTitleAndPage(num string) (error, string, string) {
+func GetTitleAndPage(num string) (error, string, string) {
 	c := collyConfig()
 	title, page := "", ""
 	c.OnHTML("#phpage > a > span", func(e *colly.HTMLElement) {
